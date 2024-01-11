@@ -21,16 +21,16 @@ import PassengerModal from '../../AppScreens/PassengerModal';
 import { appLogo } from '../../../../assets/Svg/SplashIcon';
 import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
+const width = Dimensions.get('window').width;
 function FlightSearch(props: any) {
-  const width = Dimensions.get('window').width;
-  const todayDate=moment(new Date()).format("YYYY-MM-DD")
+  const todayDate = moment(new Date()).format("YYYY-MM-DD")
   const sections = ["One Way", "Round Trip", "Multi City"];
   const stateList = [{
     "cityCode": "BOM",
     "cityName": "Mumbai",
     "countryName": "India",
     "airportName": "Chhatrapati Shivaji International Airport",
-    
+
   },
   {
     "cityCode": "MAA",
@@ -69,22 +69,22 @@ function FlightSearch(props: any) {
     "airportName": "Chaudhary Charan Singh International Airport"
   }
   ];
-  const [passengers,setPassengers]=useState([1,0,0,0]);
-  const [selectDate,setSelectDate]=useState(todayDate)
+  const [passengers, setPassengers] = useState([1, 0, 0, 0]);
+  const [selectDate, setSelectDate] = useState(todayDate)
   const [sectionIndex, setSectionIndex] = useState(0);
-  const [fromModal,setFromModal]=useState(false);
-  const [calendarModal,showCalendarModal]=useState(false);
-  const [passengerModal,setPassengerModal]=useState(false);
-  const [fromFocus,setFromFocus]=useState(true);
+  const [fromModal, setFromModal] = useState(false);
+  const [calendarModal, showCalendarModal] = useState(false);
+  const [passengerModal, setPassengerModal] = useState(false);
+  const [fromFocus, setFromFocus] = useState(true);
   const [fromData, setFromData] = useState(`${stateList[0]?.cityName} (${stateList[0]?.cityCode})`);
-  const [toData, setToData] =  useState(`${stateList[1]?.cityName} (${stateList[1]?.cityCode})`);
- 
-  function modalClose(){
+  const [toData, setToData] = useState(`${stateList[1]?.cityName} (${stateList[1]?.cityCode})`);
+
+  function modalClose() {
     setFromModal(false);
     setPassengerModal(false)
   }
-  function swapFromTo(){
-    let data=toData;
+  function swapFromTo() {
+    let data = toData;
     setToData(fromData);
     setFromData(data)
 
@@ -105,7 +105,7 @@ function FlightSearch(props: any) {
           </View>
         </View>
         <View style={styles.headerTitleContainer}>
-          <SvgXml xml={appLogo} height={30} width={30}/>
+          <SvgXml xml={appLogo} height={30} width={30} />
           <Text style={styles.headerTitleStyle}>JetSetGo</Text>
         </View>
       </View>
@@ -129,76 +129,76 @@ function FlightSearch(props: any) {
   }
   function renderTextBox(label: string, value: string) {
     return (
-      <TouchableOpacity onPress={() => { 
-        if(label=='From'){
+      <TouchableOpacity onPress={() => {
+        if (label == 'From') {
           setFromFocus(true)
         }
-        else{
-            setFromFocus(false)
+        else {
+          setFromFocus(false)
         }
         setFromModal(true)
-        }}
-       style={{ height: 50, borderColor: "grey", borderWidth: 0.5, marginBottom: 20, paddingLeft: 12,width:"100%" }}>
-        <Text style={{ backgroundColor: "white", paddingHorizontal: 5, marginTop: -10, alignSelf: "flex-start", position: "absolute", marginLeft: 12 }}>{label}</Text>
-        <View style={{ height: 50, justifyContent: "center" }}>
-          <Text style={{ fontSize: 18, fontWeight: "400", color: "black", letterSpacing: 0.1 }}>
+      }}
+        style={styles.textBoxContainer}>
+        <Text style={styles.textBoxLabel}>{label}</Text>
+        <View style={styles.textBoxSubContainer}>
+          <Text style={styles.textBoxValue}>
             {value}
           </Text>
         </View>
       </TouchableOpacity>
     )
   }
-  function renderTravelDate(){
-    return(
-      <TouchableOpacity  
-      onPress={()=>{
-        showCalendarModal(true)
-      }}
-      style={{ height: 50, borderColor: "grey", borderWidth: 0.5, marginBottom: 20, paddingLeft: 12,width:"48%" }}>
-      <Text style={{ backgroundColor: "white", paddingHorizontal: 5, marginTop: -10, alignSelf: "flex-start", position: "absolute", marginLeft: 12 }}>Travel Date(s)</Text>
-      <View style={{ height: 50,alignItems: "center",flexDirection:"row" }}>
-      <SvgXml xml={calendarIcon} height={20} width={20}/>
-      <Text style={{fontSize: 18, fontWeight: "400", color: "black", letterSpacing: 0.1,marginLeft:8 }}>{selectDate}</Text>
-      </View>
-    </TouchableOpacity>
+  function renderTravelDate() {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          showCalendarModal(true)
+        }}
+        style={{ height: 50, borderColor: "grey", borderWidth: 0.5, marginBottom: 20, paddingLeft: 12, width: "48%" }}>
+        <Text style={{ backgroundColor: "white", paddingHorizontal: 5, marginTop: -10, alignSelf: "flex-start", position: "absolute", marginLeft: 12 }}>Travel Date(s)</Text>
+        <View style={{ height: 50, alignItems: "center", flexDirection: "row" }}>
+          <SvgXml xml={calendarIcon} height={20} width={20} />
+          <Text style={{ fontSize: 18, fontWeight: "400", color: "black", letterSpacing: 0.1, marginLeft: 8 }}>{selectDate}</Text>
+        </View>
+      </TouchableOpacity>
     )
   }
-  function renderPassengerBox(){
-    return(
-      <TouchableOpacity style={{ height: 50, borderColor: "grey", borderWidth: 0.5, marginBottom: 20, paddingHorizontal: 12,width:"48%" }} onPress={()=>{
+  function renderPassengerBox() {
+    return (
+      <TouchableOpacity style={{ height: 50, borderColor: "grey", borderWidth: 0.5, marginBottom: 20, paddingHorizontal: 12, width: "48%" }} onPress={() => {
         setPassengerModal(true)
       }}>
-      <Text style={{ backgroundColor: "white", paddingHorizontal: 5, marginTop: -10, alignSelf: "flex-start", position: "absolute", marginLeft: 12 }}>Passenger(s)</Text>
-      <View style={{ height: 50, justifyContent: "space-between",alignItems:"center",flexDirection:"row" }}>
-       <View style={{flexDirection:"row",alignItems:"center"}}>
-       <SvgXml xml={passengerIcon} height={20} width={20}/>
-       <Text style={{ fontSize: 18, fontWeight: "400", marginLeft:10,color: "black", letterSpacing: 0.1 }}>
-          {passengers.reduce((acc,item)=>acc+item)}
-        </Text>
-       </View>
-       <SvgXml xml={downIcon} height={15} width={15}/>
-      </View>
-    </TouchableOpacity>
+        <Text style={{ backgroundColor: "white", paddingHorizontal: 5, marginTop: -10, alignSelf: "flex-start", position: "absolute", marginLeft: 12 }}>Passenger(s)</Text>
+        <View style={{ height: 50, justifyContent: "space-between", alignItems: "center", flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <SvgXml xml={passengerIcon} height={20} width={20} />
+            <Text style={{ fontSize: 18, fontWeight: "400", marginLeft: 10, color: "black", letterSpacing: 0.1 }}>
+              {passengers.reduce((acc, item) => acc + item)}
+            </Text>
+          </View>
+          <SvgXml xml={downIcon} height={15} width={15} />
+        </View>
+      </TouchableOpacity>
     )
   }
   function renderDetailForm() {
     return (
       <>
         <View >
-        {renderTextBox('From', fromData)}
-        {renderTextBox('To', toData)}
-        <TouchableOpacity 
-        onPress={()=>{
-          swapFromTo()
-        }}
-        style={{backgroundColor:"white",borderWidth:0.5,justifyContent:"center",alignItems:"center",borderRadius:20,height:40,width:40,position:"absolute",right:10,top:40}}>
-        <SvgXml xml={switchIcon} height={20} width={20}/>
-        </TouchableOpacity>
+          {renderTextBox('From', fromData)}
+          {renderTextBox('To', toData)}
+          <TouchableOpacity
+            onPress={() => {
+              swapFromTo()
+            }}
+            style={{ backgroundColor: "white", borderWidth: 0.5, justifyContent: "center", alignItems: "center", borderRadius: 20, height: 40, width: 40, position: "absolute", right: 10, top: 40 }}>
+            <SvgXml xml={switchIcon} height={20} width={20} />
+          </TouchableOpacity>
         </View>
-        <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-         
-        {renderTravelDate()}
-        {renderPassengerBox()}
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+
+          {renderTravelDate()}
+          {renderPassengerBox()}
         </View>
       </>
     )
@@ -211,53 +211,53 @@ function FlightSearch(props: any) {
       </View>
     )
   }
-  function renderButton(){
-    return(
-      <TouchableOpacity onPress={()=>{
-        props?.navigation?.navigate("SearchResult",{
-          date:selectDate,
-          number:passengers.reduce((acc,item)=>acc+item),from:fromData.split(" ")[0],to:toData.split(" ")[0]})
-      }} style={{backgroundColor:"#86d1ea",height:50,width:"100%",justifyContent:"center",alignItems:"center"}}>
-      <Text style={{color:"white",fontSize:16,fontWeight:"500",letterSpacing:0.3}}>SEARCH FLIGHT</Text>
+  function renderButton() {
+    return (
+      <TouchableOpacity onPress={() => {
+        props?.navigation?.navigate("SearchResult", {
+          date: selectDate,
+          number: passengers.reduce((acc, item) => acc + item), from: fromData.split(" ")[0], to: toData.split(" ")[0]
+        })
+      }} style={styles.buttonContainer}>
+        <Text style={styles.buttonTextstyle}>SEARCH FLIGHT</Text>
       </TouchableOpacity>
     )
   }
-  function renderModal(){
-    return(
+  function renderModal() {
+    return (
       <Modal
-      backdropOpacity={0.5}
-      onBackdropPress={modalClose}
-          style={{ margin: 0, width: width,justifyContent:"flex-end"}}
-          isVisible={fromModal || passengerModal}
-          animationInTiming={400}
-          animationOutTiming={400}
+        backdropOpacity={0.5}
+        onBackdropPress={modalClose}
+        style={{ margin: 0, width: width, justifyContent: "flex-end" }}
+        isVisible={fromModal || passengerModal}
+        animationInTiming={400}
+        animationOutTiming={400}
       >
-      {fromModal  ? <SearchModal visible={fromModal} onClose={modalClose} fromData={fromData} toData={toData} stateList={stateList} setFromData={setFromData} setToData={setToData} setFocus={setFromFocus} focus={fromFocus}/>
-      :<PassengerModal passengers={passengers} onClose={modalClose} setPassengers={(val:any)=>{setPassengers(val)}}/>}
+        {fromModal ? <SearchModal visible={fromModal} onClose={modalClose} fromData={fromData} toData={toData} stateList={stateList} setFromData={setFromData} setToData={setToData} setFocus={setFromFocus} focus={fromFocus} />
+          : <PassengerModal passengers={passengers} onClose={modalClose} setPassengers={(val: any) => { setPassengers(val) }} />}
       </Modal>
     )
   }
-  function dateModal(){
-    return(
+  function dateModal() {
+    return (
       <Modal
-          style={{ margin: 0, width: width,justifyContent:"flex-end"}}
-          isVisible={calendarModal}
-          animationInTiming={400}
-          animationOutTiming={400}
+        style={styles.dateModal}
+        isVisible={calendarModal}
+        animationInTiming={400}
+        animationOutTiming={400}
       >
-        <View style={{flex:1,backgroundColor:"white"}}>
-        <TouchableOpacity style={{ marginTop: 5 }} onPress={() => 
-        {
+        <View style={styles.dateModalContainer}>
+          <TouchableOpacity style={{ marginTop: 5 }} onPress={() => {
             showCalendarModal(false)
-        }}>
+          }}>
             <SvgXml xml={closeIcon} height={30} width={30} />
-        </TouchableOpacity>
-        <Calendar
+          </TouchableOpacity>
+          <Calendar
             initialDate={selectDate}
             minDate={selectDate}
             onDayPress={day => {
-             setSelectDate(day.dateString);
-             showCalendarModal(false)
+              setSelectDate(day.dateString);
+              showCalendarModal(false)
             }}
             disableAllTouchEventsForDisabledDays={true}
           />
@@ -274,7 +274,7 @@ function FlightSearch(props: any) {
       </View>
       {renderModal()}
       {dateModal()}
-     
+
     </View>
   )
 }
@@ -285,10 +285,18 @@ const styles = StyleSheet.create({
   },
   headerContainer: { width: "100%", padding: 16, flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomWidth: 0.5 },
   headerButton: { height: 30, width: 30, borderWidth: 0.5, borderRadius: 15, justifyContent: "center", alignItems: "center" },
-  headerTitleStyle: { color: "black", fontSize: 20, fontWeight: "600",marginLeft:5 },
-  headerTitleContainer: { position: "absolute", justifyContent: "center", alignItems: "center", height: "100%", width: "100%" ,flexDirection:"row"},
+  headerTitleStyle: { color: "black", fontSize: 20, fontWeight: "600", marginLeft: 5 },
+  headerTitleContainer: { position: "absolute", justifyContent: "center", alignItems: "center", height: "100%", width: "100%", flexDirection: "row" },
   contentContainer: { flex: 1, padding: 16 },
   sectionMainContainer: { flexDirection: "row", marginBottom: 30 },
-  sectionContainer: { flexDirection: "row", alignItems: "center", flex: 1, justifyContent: "center" }
+  sectionContainer: { flexDirection: "row", alignItems: "center", flex: 1, justifyContent: "center" },
+  dateModalContainer: { flex: 1, backgroundColor: "white" },
+  dateModal: { margin: 0, width: width, justifyContent: "flex-end" },
+  buttonContainer: { backgroundColor: "#86d1ea", height: 50, width: "100%", justifyContent: "center", alignItems: "center" },
+  buttonTextstyle: { color: "white", fontSize: 16, fontWeight: "500", letterSpacing: 0.3 },
+  textBoxContainer:{ height: 50, borderColor: "grey", borderWidth: 0.5, marginBottom: 20, paddingLeft: 12, width: "100%" },
+  textBoxLabel:{ backgroundColor: "white", paddingHorizontal: 5, marginTop: -10, alignSelf: "flex-start", position: "absolute", marginLeft: 12 },
+  textBoxSubContainer:{ height: 50, justifyContent: "center" },
+  textBoxValue:{ fontSize: 18, fontWeight: "400", color: "black", letterSpacing: 0.1 }
 })
 export default FlightSearch
